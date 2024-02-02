@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 
 const peopleSchema = new mongoose.Schema({
   name: String,
@@ -12,6 +12,6 @@ const peopleSchema = new mongoose.Schema({
   },
 })
 
-const PeopleSchema = mongoose.model('Contact', peopleSchema)
+const PeopleSchema = mongoose.model('People', peopleSchema)
 
 export default PeopleSchema
