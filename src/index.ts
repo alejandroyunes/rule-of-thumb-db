@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express, { Response } from 'express'
 import cors from "cors"
 import dotenv from "dotenv"
 import { connectToDb } from './db/index'
@@ -11,7 +11,7 @@ const port = process.env.PORT || 4000
 
 const corsOptions = {
   origin: ['http://localhost:3000'],
-  methods: ['POST', 'GET', 'PATCH'],
+  methods: ['GET', 'PATCH'],
 }
 
 app.use(cors(corsOptions))
@@ -75,8 +75,6 @@ app.patch('/people/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
-
-
 
 app.listen(port, () => {
   console.log(`🚀 Express ready at http://localhost:${port}`)

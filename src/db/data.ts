@@ -4,7 +4,7 @@ const peopleData = [
   {
     "id": '1',
     "category": "entertainment",
-    "picture": "https://res.cloudinary.com/dzttogpsi/image/upload/v1706912673/people/lq1uge86sbxpwjaxunpi.jpg",
+    "picture": "https://res.cloudinary.com/dzttogpsi/image/upload/v1706917920/people/rov7y3ppyysgdphfejlg.jpg",
     "votes": { "positive": 23, "negative": 36 },
     "name": "Kanye West",
     "lastUpdated": "2020-03-10T23:08:57.892Z",
@@ -22,7 +22,7 @@ const peopleData = [
   {
     "id": '3',
     "category": "politics",
-    "picture": "https://res.cloudinary.com/dzttogpsi/image/upload/v1706912673/people/d3rat0osgurkhm7sga12.jpg",
+    "picture": "https://res.cloudinary.com/dzttogpsi/image/upload/v1706912673/people/svga2powvqpptdhxsblg.jpg",
     "votes": { "positive": 45, "negative": 97 },
     "name": "Cristina Fernández de Kirchner",
     "lastUpdated": "2020-12-10T23:41:07.120Z",
@@ -57,15 +57,14 @@ const peopleData = [
   }
 ]
 
+// peopleData.forEach(async (peopleData) => {
+//   try {
+//     const person = new PeopleSchema(peopleData);
+
+//     await person.save();
+//     console.log('Person inserted successfully:', person);
+//   } catch (error: any) {
+//     console.error('Error inserting person:', error.message);
+//   }
+// });
 export default peopleData
-
-peopleData.forEach(async (peopleData) => {
-  try {
-    const person = new PeopleSchema(peopleData);
-
-    await person.save();
-    console.log('Person inserted successfully:', person);
-  } catch (error: any) {
-    console.error('Error inserting person:', error.message);
-  }
-});
