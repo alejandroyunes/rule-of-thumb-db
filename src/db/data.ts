@@ -1,3 +1,5 @@
+import PeopleSchema from '../models/peopleSchema'
+
 const peopleData = [
   {
     "id": '1',
@@ -53,6 +55,17 @@ const peopleData = [
     "lastUpdated": "2021-02-26T23:44:50.326Z",
     "description": "Thunberg's activism started after convincing her parents to adopt several lifestyle choices to reduce their own carbon footprint."
   }
-];
+]
 
-export default peopleData;
+export default peopleData
+
+peopleData.forEach(async (peopleData) => {
+  try {
+    const person = new PeopleSchema(peopleData);
+
+    await person.save();
+    console.log('Person inserted successfully:', person);
+  } catch (error: any) {
+    console.error('Error inserting person:', error.message);
+  }
+});

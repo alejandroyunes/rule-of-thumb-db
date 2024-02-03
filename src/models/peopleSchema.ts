@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose';
 
 const peopleSchema = new mongoose.Schema({
   name: String,
@@ -10,8 +10,20 @@ const peopleSchema = new mongoose.Schema({
     positive: Number,
     negative: Number,
   },
-})
+});
 
-const PeopleSchema = mongoose.model('People', peopleSchema)
+export interface IPeople extends Document {
+  name: string
+  description: string
+  category: string
+  picture: string
+  lastUpdated: string
+  votes: {
+    positive: number
+    negative: number
+  };
+}
 
-export default PeopleSchema
+const PeopleSchema = mongoose.model<IPeople>('People', peopleSchema);
+
+export default PeopleSchema;
