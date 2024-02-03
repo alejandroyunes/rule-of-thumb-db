@@ -11,8 +11,8 @@ const port = process.env.PORT || 4000
 
 const corsOptions = {
   origin: ['http://localhost:3000'],
-  methods: ['POST', 'GET'],
-};
+  methods: ['POST', 'GET', 'PATCH'],
+}
 
 app.use(cors(corsOptions))
 app.use(express.json())
@@ -21,10 +21,10 @@ connectToDb()
 
 app.get('/people', async (_, res: Response) => {
   try {
-    const people = await PeopleSchema.find({});
+    const people = await PeopleSchema.find({})
 
     const formattedData = people.map(person => ({
-      _id: person._id, 
+      _id: person._id,
       name: person.name,
       description: person.description,
       category: person.category,
@@ -33,14 +33,49 @@ app.get('/people', async (_, res: Response) => {
       __v: person.__v,
       negativePercentage: calculatePercentage(person.votes.negative, person.votes.positive + person.votes.negative),
       positivePercentage: calculatePercentage(person.votes.positive, person.votes.positive + person.votes.negative),
-    }));
+    }))
 
-    res.json(formattedData);
+    res.json(formattedData)
   } catch (error: any) {
-    console.error('Error retrieving people:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error retrieving people:', error.message)
+    res.status(500).json({ error: 'Internal Server Error' })
   }
-});
+})
+
+app.patch('/people/:id', async (req, res) => {
+  const { id } = req.params
+  const { votes } = req.body
+
+  try {
+    const { positive, negative } = votes
+    const updateObject: Record<string, number> = {}
+
+    if (positive) {
+      updateObject['votes.positive'] = 1
+    }
+    if (negative) {
+      updateObject['votes.negative'] = 1
+    }
+
+    const person = await PeopleSchema.findByIdAndUpdate(
+      id,
+      {
+        $inc: updateObject,
+      },
+      { new: true }
+    )
+
+    if (!person) {
+      return res.status(404).json({ error: 'Person not found' })
+    }
+
+    return res.json(person)
+  } catch (error: any) {
+    console.error('Error updating votes:', error.message)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 
 
 app.listen(port, () => {
